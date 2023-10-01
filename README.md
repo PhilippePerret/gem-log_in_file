@@ -1,8 +1,6 @@
 # LogInFile
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/log_in_file`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+To write easily log messages in an output file.
 
 ## Installation
 
@@ -22,7 +20,56 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+~~~ruby
+require 'log_in_file'
+
+logif("This message will be always written in a file.")
+
+Logif.severity_level = Logif::WARN|Logif::ERROR
+
+# This message will not be written
+logif(Logif::INFO, "Message written only for info")
+
+# This message will be written
+logif(Logif::WARN, "Be carefull!")
+
+~~~
+
+### Message with data (*template message*)
+
+~~~ruby
+
+msg = "This is a %{how} message."
+logif( msg, **{ data: { how: 'right' } } )
+
+# => write "This is a right message." in the log file.
+~~~
+
+To open the log file (to read it):
+
+~~~ruby
+Logif.open
+
+# or:
+
+Logif.start
+~~~
+
+To remove the log file:
+
+~~~ruby
+Logif.remove_log
+~~~
+
+
+### Severity levels
+
+~~~
+Logif::NOTICE
+Logif::INFO
+Logif::WARN
+Logif::ERROR
+~~~
 
 ## Development
 
